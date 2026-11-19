@@ -176,10 +176,10 @@ class APIKeyThrottle(BaseThrottle):
                     key=key_str, is_active=True
                 )
             except APIKey.DoesNotExist:
-                # Invalid / revoked key → reject
+                # Invalid / revoked key → 401 (not a 429 throttle response)
                 self._set_headers(request, limit=0, remaining=0, reset=self._next_reset())
                 throttle_rejections_total.labels(reason="invalid_api_key").inc()
-                return False
+                raise AuthenticationFailed("Invalid or revoked API key")
 
         # Determine effective quota (contract-level override wins when lower)
         quota = api_key.quota_per_hour

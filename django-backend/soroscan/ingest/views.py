@@ -611,7 +611,7 @@ class TrackedContractViewSet(viewsets.ModelViewSet):
         """
         Verify contract source against deployed bytecode (issue #1703).
 
-        There is no ``placeholder_hash`` path: the real SHA-256 of the uploaded
+        No stub hash is ever recorded: the real SHA-256 of the uploaded
         source file is stored, and the caller-supplied on-chain bytecode hash
         is validated (shape + conflict check).
         """

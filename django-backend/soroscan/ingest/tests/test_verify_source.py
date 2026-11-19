@@ -58,7 +58,7 @@ def _make_contract_with_source(user, *, contract_id=None):
 
 
 def _verify_url(contract):
-    return f"/api/contracts/{contract.pk}/verify_source/"
+    return f"/api/ingest/contracts/{contract.pk}/verify_source/"
 
 
 # ---------------------------------------------------------------------------

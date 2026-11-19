@@ -9,6 +9,7 @@ Covers:
 from __future__ import annotations
 
 import pytest
+from stellar_sdk import StrKey
 
 from soroscan.ingest.models import TrackedContract
 from soroscan.ingest.tests.factories import TrackedContractFactory, UserFactory
@@ -26,13 +27,20 @@ REGISTER_MUTATION = """
     }
 """
 
-VALID_CONTRACT_ID = "C" + "A" * 55  # 56 chars, starts with C, Base32 alphabet
+# A real StrKey-encoded contract address (valid CRC16 checksum). A bare
+# "C" + "A" * 55 is only regex-valid and is rejected by StrKey validation.
+VALID_CONTRACT_ID = StrKey.encode_contract(bytes(32))
 
 
 def _register(schema, contract_id: str, name: str = "Test Contract"):
+    from django.test import RequestFactory
+
+    request = RequestFactory().post("/graphql")
+    request.user = UserFactory()
     return schema.execute_sync(
         REGISTER_MUTATION,
         variable_values={"contractId": contract_id, "name": name},
+        context_value=type("Ctx", (), {"request": request})(),
     )
 
 
