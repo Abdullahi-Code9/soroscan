@@ -2,6 +2,7 @@
 
 import { useEffect } from "react"
 import { Button } from "@/components/terminal/Button"
+import { reloadPage } from "@/lib/navigation"
 
 /**
  * Global error boundary (issue #1707).
@@ -62,11 +63,7 @@ export default function GlobalError({
               <Button
                 variant="secondary"
                 size="default"
-                onClick={() => {
-                  if (typeof window !== "undefined") {
-                    window.location.reload()
-                  }
-                }}
+                onClick={() => reloadPage()}
               >
                 Reload page
               </Button>

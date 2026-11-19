@@ -58,7 +58,7 @@ describe("Admin chart and metric components", () => {
 
     it("shows loading state", () => {
       render(<WebhookStats successRate={0} avgTime={0} loading />);
-      expect(screen.getByText("--")).toBeInTheDocument();
+      expect(screen.getByText("--%")).toBeInTheDocument();
       expect(screen.getByText("--- ms")).toBeInTheDocument();
     });
   });

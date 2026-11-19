@@ -16,6 +16,12 @@ import NotFound from "@/app/not-found"
 import RouteError from "@/app/error"
 import GlobalError from "@/app/global-error"
 
+const mockReloadPage = jest.fn()
+jest.mock("@/lib/navigation", () => ({
+  reloadPage: () => mockReloadPage(),
+  hardNavigate: jest.fn(),
+}))
+
 const makeError = (message = "boom") => Object.assign(new Error(message), { digest: "abc123" })
 
 
@@ -97,33 +103,17 @@ describe("app/global-error.tsx", () => {
     const reset = jest.fn()
     render(<GlobalError error={makeError()} reset={reset} />)
 
-    fireEvent.click(screen.getByRole("button", { name: /^retry$/i }))
+    fireEvent.click(screen.getByRole("button", { name: /retry/i }))
 
     expect(reset).toHaveBeenCalledTimes(1)
   })
 
-  it("calls window.location.reload() when Reload is clicked", () => {
+  it("reloads the page when Reload is clicked", () => {
     const reset = jest.fn()
-    const reload = jest.fn()
-    const originalLocation = window.location
+    render(<GlobalError error={makeError()} reset={reset} />)
+    fireEvent.click(screen.getByRole("button", { name: /reload page/i }))
 
-    // jsdom's window.location.reload is a no-op stub; override for the test.
-    Object.defineProperty(window, "location", {
-      configurable: true,
-      value: { ...originalLocation, reload },
-    })
-
-    try {
-      render(<GlobalError error={makeError()} reset={reset} />)
-      fireEvent.click(screen.getByRole("button", { name: /reload page/i }))
-
-      expect(reload).toHaveBeenCalledTimes(1)
-      expect(reset).not.toHaveBeenCalled()
-    } finally {
-      Object.defineProperty(window, "location", {
-        configurable: true,
-        value: originalLocation,
-      })
-    }
+    expect(mockReloadPage).toHaveBeenCalledTimes(1)
+    expect(reset).not.toHaveBeenCalled()
   })
 })
