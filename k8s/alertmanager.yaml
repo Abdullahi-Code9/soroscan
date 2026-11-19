@@ -13,9 +13,26 @@ spec:
       labels:
         app: alertmanager
     spec:
+      securityContext:
+        fsGroup: 65534
       containers:
         - name: alertmanager
           image: prom/alertmanager:v0.26.0
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            runAsUser: 65534
+            capabilities:
+              drop:
+                - ALL
           args:
             - "--config.file=/etc/alertmanager/alertmanager.yml"
             - "--storage.path=/alertmanager"
