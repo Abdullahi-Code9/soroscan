@@ -19,7 +19,6 @@ from rest_framework.test import APIClient
 from soroscan.ingest.models import (
     ContractSource,
     ContractVerification,
-    TrackedContract,
 )
 from soroscan.ingest.tests.factories import TrackedContractFactory, UserFactory
 

@@ -12,7 +12,12 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
-from soroscan.ingest.models import ContractEvent, TrackedContract, WebhookDeadLetter
+from soroscan.ingest.models import (
+    ContractEvent,
+    ContractVerification,
+    TrackedContract,
+    WebhookDeadLetter,
+)
 from soroscan.ingest.services.webhook_replay import create_replay_job
 
 

@@ -2,6 +2,7 @@
 Test settings for SoroScan project.
 """
 import os
+import tempfile
 from datetime import timedelta
 from pathlib import Path
 
@@ -104,8 +105,6 @@ else:
     }
 
 # Keep uploaded files created by tests out of the source tree.
-import tempfile
-
 MEDIA_ROOT = tempfile.mkdtemp(prefix="soroscan-test-media-")
 
 # Password validation

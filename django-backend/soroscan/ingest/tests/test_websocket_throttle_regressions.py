@@ -2,7 +2,7 @@
 import asyncio
 from rest_framework.exceptions import AuthenticationFailed
 from types import SimpleNamespace
-from unittest.mock import AsyncMock, MagicMock, patch
+from unittest.mock import AsyncMock, patch
 
 from django.test import SimpleTestCase
 from prometheus_client import REGISTRY
