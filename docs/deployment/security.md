@@ -1,5 +1,5 @@
 ---
-id: deployment/security
+id: security
 title: Pre-Deployment Security Checklist
 description: Verifiable checklist for production hardening before go-live.
 slug: /deployment/security
