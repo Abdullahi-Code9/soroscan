@@ -6,12 +6,16 @@ on:
     paths:
       - "docs/**"
       - "soroscan-docs/**"
+      - "package.json"
+      - "package-lock.json"
       - ".github/workflows/docs-ci.yml"
   pull_request:
     branches: [main, dev]
     paths:
       - "docs/**"
       - "soroscan-docs/**"
+      - "package.json"
+      - "package-lock.json"
       - ".github/workflows/docs-ci.yml"
 
 jobs:

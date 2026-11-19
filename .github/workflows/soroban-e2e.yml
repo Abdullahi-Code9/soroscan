@@ -65,7 +65,7 @@ jobs:
           health_interval: "10"
 
       - name: Install Rust stable
-        uses: dtolnay/rust-toolchain@1.85
+        uses: dtolnay/rust-toolchain@1.81
         with:
           targets: wasm32-unknown-unknown
 
