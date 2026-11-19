@@ -1,9 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { render, screen } from "@testing-library/react";
+import type { ComponentProps, ReactNode } from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { BackfillModal } from "../BackfillModal";
 
 jest.mock("@/components/terminal/Modal", () => ({
-  Modal: ({ isOpen, onClose, title, children }: any) =>
+  Modal: ({
+    isOpen,
+    onClose,
+    title,
+    children,
+  }: {
+    isOpen: boolean;
+    onClose: () => void;
+    title?: string;
+    children: ReactNode;
+  }) =>
     isOpen ? (
       <div role="dialog" aria-label={title}>
         <button onClick={onClose}>Close</button>
@@ -13,7 +24,7 @@ jest.mock("@/components/terminal/Modal", () => ({
 }));
 
 jest.mock("@/components/terminal/Button", () => ({
-  Button: ({ children, onClick, ...props }: any) => (
+  Button: ({ children, onClick, ...props }: ComponentProps<"button">) => (
     <button onClick={onClick} {...props}>
       {children}
     </button>

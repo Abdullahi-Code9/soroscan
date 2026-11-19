@@ -1,9 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { ReactNode } from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { FilterBuilderModal } from "../FilterBuilderModal";
 
 jest.mock("@/components/terminal/Modal", () => ({
-  Modal: ({ isOpen, onClose, title, children }: any) =>
+  Modal: ({
+    isOpen,
+    onClose,
+    title,
+    children,
+  }: {
+    isOpen: boolean;
+    onClose: () => void;
+    title?: string;
+    children: ReactNode;
+  }) =>
     isOpen ? (
       <div role="dialog" aria-label={title}>
         <button onClick={onClose}>Close</button>
@@ -13,7 +24,7 @@ jest.mock("@/components/terminal/Modal", () => ({
 }));
 
 jest.mock("@/components/ui/WebhookFilterExpressionBuilder", () => ({
-  WebhookFilterExpressionBuilder: ({ value, onChange }: any) => (
+  WebhookFilterExpressionBuilder: ({ onChange }: { onChange: (value: unknown) => void }) => (
     <div data-testid="webhook-filter-builder">
       <button onClick={() => onChange({ root: { id: "g1", kind: "group", logic: "OR", children: [] } })}>
         Change
